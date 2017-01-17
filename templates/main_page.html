@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for comment in comments %}
-        <div class="row">
-            {{ comment.content }}
-        </div>
-    {% endfor %}
+{% for comment in comments %}
+<div class="row">
+    {{ comment.content }}
+</div>
+{% endfor %}
 
-            <div class="row">
-                <form action="." method="POST">
-                    <textarea class="form-control" name="contents" placeholder="Enter a comment"></textarea>
-                    <input type="submit" value="Post comment">
-                </form>
-            </div>
+<div class="row">
+    <form action="." method="POST">
+        <textarea class="form-control" name="contents" placeholder="Enter a comment"></textarea>
+        <input type="submit" value="Post comment">
+    </form>
+</div>
 
-            <div class="row">
-                <form action="." method="POST">
-                    <textarea class="form-control" name="contents" placeholder="Enter your feature requests here!"></textarea>
-                    <input type="submit" value="Send request">
-                </form>
-            </div>
+<div class="row">
+    <form action="." method="POST">
+        <textarea class="form-control" name="contents" placeholder="Enter your feature requests here!"></textarea>
+        <input type="submit" value="Send request">
+    </form>
+</div>
 {% endblock %}
