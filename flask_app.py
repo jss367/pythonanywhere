@@ -35,3 +35,6 @@ def index():
     db.session.commit()
     return redirect(url_for('index'))
 
+@app.route('/about')
+def about_route():
+    return render_template('about.html')
