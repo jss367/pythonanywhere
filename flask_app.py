@@ -4,7 +4,7 @@
 from flask import Flask, redirect, render_template, request, url_for, jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
 from text_analysis import analyze_text
-
+#maybe this will help?
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
