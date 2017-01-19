@@ -1,9 +1,11 @@
 
+
 # A very simple Flask Hello World app for you to get started with...
 
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
-
+from text_analysis import analyze_text
+#maybe this will help?
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
@@ -38,3 +40,10 @@ def index():
 @app.route('/about')
 def about_route():
     return render_template('about.html')
+
+
+@app.route('/analyze-text', methods=['POST'])
+def analyze():
+    html = request.form.get('html', '')
+    text, tokens, metrics = analyze_text(html)
+    return jsonify({'text': text, 'tokens': tokens, 'metrics': metrics})
