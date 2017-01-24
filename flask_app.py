@@ -1,19 +1,7 @@
 from flask import Flask, redirect, render_template, request, url_for
-from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
-
-SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
-    username="sappho$sapphodb",
-    password="mysqldbpw0o0o",
-    hostname="sappho.mysql.pythonanywhere-services.com",
-    databasename="sappho$sapphodb",
-)
-app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
-app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
-
-db = SQLAlchemy(app)
 
 comments = []
 
