@@ -17,14 +17,14 @@ db = SQLAlchemy(app)
 
 class Comment(db.Model):
 
-    __tablename__ = "sapphodb"
+    __tablename__ = "commentdb"
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(4096))
 
 class Feature(db.Model):
 
-    __tablename__ = "sapphodb"
+    __tablename__ = "featuredb"
 
     id = db.Column(db.Integer, primary_key=True)
     feature_content = db.Column(db.String(4096))
