@@ -5,7 +5,7 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 
 SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
-    username="sappho",
+    username="sappho$sapphodb",
     password="mysqldbpw0o0o",
     hostname="sappho.mysql.pythonanywhere-services.com",
     databasename="sappho$sapphodb",
@@ -17,14 +17,14 @@ db = SQLAlchemy(app)
 
 class Comment(db.Model):
 
-    __tablename__ = "sapphodb"
+    __tablename__ = "commentdb"
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(4096))
 
 class Feature(db.Model):
 
-    __tablename__ = "sapphodb"
+    __tablename__ = "featuredb"
 
     id = db.Column(db.Integer, primary_key=True)
     feature_content = db.Column(db.String(4096))
