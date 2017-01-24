@@ -34,3 +34,8 @@ def index():
     db.session.add(comment)
     db.session.commit()
     return redirect(url_for('index'))
+
+
+@app.route('/index', methods=['GET', 'POST'])
+def new_index():
+    return render_template('index.html')
