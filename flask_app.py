@@ -42,7 +42,7 @@ def index():
 
 @app.route('/index', methods=['GET', 'POST'])
 def new_index():
-	errors = []
+    errors = []
     results = {}
     if request.method == "POST":
         # get url that the person has entered
