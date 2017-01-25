@@ -34,11 +34,19 @@ class Comment(db.Model):
 def index():
     if request.method == "GET":
         return render_template("main_page.html", comments=Comment.query.all())
+    #I don't know if I need to do any elif statement, but it seems safer to make it explicit than implied
+    elif request.method == "POST":
+        errors = []
+        results = {}
+        text = Comment(content=request.form["contents"])
+        db.session.add(text)
+        db.session.commit()
+        results = analyze_text(text)
+        return render_template('index.html', errors=errors, results=results)
+    else:
+        return render_template('error.html', errors=errors)
 
-    comment = Comment(content=request.form["contents"])
-    db.session.add(comment)
-    db.session.commit()
-    return redirect(url_for('index'))
+        #return redirect(url_for('index'))
 
 
 @app.route('/index', methods=['GET', 'POST'])
