@@ -7,8 +7,6 @@ from stop_words import stops
 from collections import Counter
 from bs4 import BeautifulSoup
 
-import cgi
-
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
@@ -48,6 +46,7 @@ def new_index():
     results = {}
     if request.method == "POST":
         test = 'this is your text'
+        return test
         try:
             text = request.form['contents']
         except:
@@ -81,10 +80,7 @@ def new_index():
     #       db.session.commit()
     #   except:
     #        errors.append("Unable to add item to database.")
-    cgitb.enable()
-    print("Content-Type: text/plain;charset=utf-8")
-    print()
-    print("Hello World!")
+
     return render_template('index.html', errors=errors, results=results)
 
 
