@@ -79,6 +79,6 @@ def new_index():
     # return render_template('index.html', errors=errors, results=results)
 
 
-    @app.route('/post')
+@app.route('/post')
 def post():
     return render_template('post.html')
