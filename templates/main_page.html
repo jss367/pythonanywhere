@@ -2,29 +2,30 @@
 
 {% block content %}
 <body>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <div class="container">
 
-    <div class="container">
+   {% for comment in comments %}
+   <div class="row">
+    {{ comment.content }}
+</div>
+{% endfor %}
 
-     {% for comment in comments %}
-     <div class="row">
-        {{ comment.content }}
-    </div>
-    {% endfor %}
-
-    <div class="row">
-        <form action="." method="POST">
-            <textarea class="form-control" name="contents" placeholder="Enter a comment"></textarea>
-            <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-    </div>
-    <br>
-    <br>
-    <div class="row">
-        <form action="." method="POST">
-            <textarea class="form-control" name="contents" placeholder="Are we missing something? Enter your feature requests here!"></textarea>
-            <button type="submit" class="btn btn-default">Send request</button>
-        </form>
-    </div>
+<div class="row">
+    <form action="." method="POST">
+        <textarea class="form-control" name="contents" placeholder="Enter a comment"></textarea>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>
+<br>
+<br>
+<div class="row">
+    <form action="." method="POST">
+        <textarea class="form-control" name="contents" placeholder="Are we missing something? Enter your feature requests here!"></textarea>
+        <button type="submit" class="btn btn-default">Send request</button>
+    </form>
+</div>
 </div>
 
 <br>
@@ -56,6 +57,9 @@
 {% endif %}
 </div>
 <br>
+
+<script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 </body>
 </html>
