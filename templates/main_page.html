@@ -5,8 +5,8 @@
 
     <div class="container">
 
-       {% for comment in comments %}
-       <div class="row">
+     {% for comment in comments %}
+     <div class="row">
         {{ comment.content }}
     </div>
     {% endfor %}
@@ -21,11 +21,41 @@
     <br>
     <div class="row">
         <form action="." method="POST">
-            <textarea class="form-control" name="contents" placeholder="Enter your feature requests here!"></textarea>
+            <textarea class="form-control" name="contents" placeholder="Are we missing something? Enter your feature requests here!"></textarea>
             <button type="submit" class="btn btn-default">Send request</button>
         </form>
     </div>
 </div>
+
+<br>
+{% for error in errors %}
+<h4>{{ error }}</h4>
+{% endfor %}
+<br>
+</div>
+<div class="col-sm-5 col-sm-offset-1">
+    {% if results %}
+    <h2>Frequencies</h2>
+    <br>
+    <div id="results">
+      <table class="table table-striped" style="max-width: 300px;">
+        <thead>
+          <tr>
+            <th>Word</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+    {% for result in results%}
+    <tr>
+      <td>{{ result[0] }}</td>
+      <td>{{ result[1] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+{% endif %}
+</div>
+<br>
 
 </body>
 </html>
