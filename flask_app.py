@@ -40,7 +40,7 @@ def index():
         comment = Comment(content=request.form["contents"])
         db.session.add(comment)
         db.session.commit()
-        results = analyze_text(comment)
+        #results = analyze_text(comment)
         return render_template("main_page.html", comments=Comment.query.all(), errors=errors, results=results)
         #return redirect(url_for('index'))
 
