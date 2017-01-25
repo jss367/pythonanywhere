@@ -38,9 +38,10 @@ def index():
     elif request.method == "POST":
         errors = []
         results = {}
-        text = Comment(content=request.form["contents"])
-        db.session.add(text)
+        comment = Comment(content=request.form["contents"])
+        db.session.add(comment)
         db.session.commit()
+        text = comment
         results = analyze_text(text)
         return render_template('index.html', errors=errors, results=results)
     else:
