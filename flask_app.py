@@ -1,5 +1,6 @@
 from flask import Flask, redirect, render_template, request, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
+from text_analysis import analyze_text
 
 import re
 import nltk
@@ -51,22 +52,23 @@ def new_index():
             errors.append(
                 "Unable to get URL. Please make sure it's valid and try again."
             )
+        results = analyze_text(text)
         #raw = Comment(content=request.form["contents"])
         #nltk.data.path.append('./nltk_data/')  # set the path
         #tokens = nltk.word_tokenize(raw)
         #text = nltk.Text(tokens)
         # remove punctuation, count raw words
-        nonPunct = re.compile('.*[A-Za-z].*')
-        raw_words = [w for w in text if nonPunct.match(w)]
-        raw_word_count = Counter(raw_words)
+        #nonPunct = re.compile('.*[A-Za-z].*')
+        #raw_words = [w for w in text if nonPunct.match(w)]
+        #raw_word_count = Counter(raw_words)
         # stop words
         #no_stop_words = [w for w in raw_words if w.lower() not in stops]
         #no_stop_words_count = Counter(no_stop_words)
         # save the results
-        results = sorted(
-            raw_word_count.items(),
-            reverse=True
-           )
+        #results = sorted(
+        #    raw_word_count.items(),
+        #    reverse=True
+        #   )
     #    try:
     #        result = Result(
     #            url=url,
