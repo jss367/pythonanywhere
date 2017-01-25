@@ -34,12 +34,12 @@ class Comment(db.Model):
 def index():
     if request.method == "GET":
         return render_template("main_page.html", comments=Comment.query.all())
-
-    comment = Comment(content=request.form["contents"])
-    db.session.add(comment)
-    db.session.commit()
-    return redirect(url_for('index'))
-
+    elif request.method == "POST":
+        comment = Comment(content=request.form["contents"])
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(url_for('index'))
+        
 
 @app.route('/index', methods=['GET', 'POST'])
 def new_index():
