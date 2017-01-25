@@ -51,7 +51,6 @@ def new_index():
             errors.append(
                 "Unable to get URL. Please make sure it's valid and try again."
             )
-        #return text
         #raw = Comment(content=request.form["contents"])
         #nltk.data.path.append('./nltk_data/')  # set the path
         #tokens = nltk.word_tokenize(raw)
@@ -78,7 +77,6 @@ def new_index():
     #       db.session.commit()
     #   except:
     #        errors.append("Unable to add item to database.")
-        #return text
     return render_template('index.html', errors=errors, results=results)
 
 
