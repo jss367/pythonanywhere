@@ -45,15 +45,13 @@ def new_index():
     errors = []
     results = {}
     if request.method == "POST":
-        test = 'this is your text'
-
         try:
             text = request.form['contents']
         except:
             errors.append(
                 "Unable to get URL. Please make sure it's valid and try again."
             )
-        return text
+        #return text
         #raw = Comment(content=request.form["contents"])
         #nltk.data.path.append('./nltk_data/')  # set the path
         #tokens = nltk.word_tokenize(raw)
@@ -66,11 +64,11 @@ def new_index():
         #no_stop_words = [w for w in raw_words if w.lower() not in stops]
         #no_stop_words_count = Counter(no_stop_words)
         # save the results
-        #results = sorted(
-        #    no_stop_words_count.items(),
-        #    key=operator.itemgetter(1),
-        #    reverse=True
-        #   )
+        results = sorted(
+            no_stop_words_count.items(),
+            key=operator.itemgetter(1),
+            reverse=True
+           )
     #    try:
     #        result = Result(
     #            url=url,
