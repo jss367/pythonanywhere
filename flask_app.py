@@ -66,7 +66,6 @@ def new_index():
         # save the results
         results = sorted(
             raw_word_count.items(),
-            key=operator.itemgetter(1),
             reverse=True
            )
     #    try:
@@ -79,7 +78,7 @@ def new_index():
     #       db.session.commit()
     #   except:
     #        errors.append("Unable to add item to database.")
-
+        #return text
     return render_template('index.html', errors=errors, results=results)
 
 
