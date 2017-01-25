@@ -77,3 +77,8 @@ def new_index():
     #     except:
     #         errors.append("Unable to add item to database.")
     # return render_template('index.html', errors=errors, results=results)
+
+
+    @app.route('/post')
+def post():
+    return render_template('post.html')
