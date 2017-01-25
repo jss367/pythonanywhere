@@ -65,7 +65,7 @@ def new_index():
         #no_stop_words_count = Counter(no_stop_words)
         # save the results
         results = sorted(
-            no_stop_words_count.items(),
+            raw_word_count.items(),
             key=operator.itemgetter(1),
             reverse=True
            )
