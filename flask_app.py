@@ -35,6 +35,8 @@ def index():
     if request.method == "GET":
         return render_template("main_page.html", comments=Comment.query.all())
     elif request.method == "POST":
+        errors = []
+        results = {}
         comment = Comment(content=request.form["contents"])
         db.session.add(comment)
         db.session.commit()
