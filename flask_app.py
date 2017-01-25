@@ -46,13 +46,14 @@ def new_index():
     results = {}
     if request.method == "POST":
         test = 'this is your text'
-        return test
+
         try:
             text = request.form['contents']
         except:
             errors.append(
                 "Unable to get URL. Please make sure it's valid and try again."
             )
+        return text
         #raw = Comment(content=request.form["contents"])
         #nltk.data.path.append('./nltk_data/')  # set the path
         #tokens = nltk.word_tokenize(raw)
