@@ -44,6 +44,7 @@ def index():
             errors.append(
                 "Unable to get URL. Please make sure it's valid and try again."
             )
+        results = analyze_text(text)
     return render_template("main_page.html", errors=errors, results=results)
         #return render_template("main_page.html", comments=Comment.query.all(), errors=errors, results=results)
         #return redirect(url_for('index'))
@@ -65,13 +66,6 @@ def new_index():
         #nltk.data.path.append('./nltk_data/')  # set the path
         #tokens = nltk.word_tokenize(raw)
         #text = nltk.Text(tokens)
-        # remove punctuation, count raw words
-        #nonPunct = re.compile('.*[A-Za-z].*')
-        #raw_words = [w for w in text if nonPunct.match(w)]
-        #raw_word_count = Counter(raw_words)
-        # stop words
-        #no_stop_words = [w for w in raw_words if w.lower() not in stops]
-        #no_stop_words_count = Counter(no_stop_words)
         # save the results
         #results = sorted(
         #    raw_word_count.items(),
