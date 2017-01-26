@@ -30,28 +30,26 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(4096))
 
-# @app.route("/", methods=["GET", "POST"])
-# def index():
-#     if request.method == "GET":
-#         return render_template("main_page.html", comments=Comment.query.all())
-#     elif request.method == "POST":
-#         errors = []
-#         results = {}
-#         comment = Comment(content=request.form["contents"])
-#         db.session.add(comment)
-#         db.session.commit()
-#         try:
-#             text = request.form['contents']
-#         except:
-#             errors.append(
-#                 "Unable to get URL. Please make sure it's valid and try again."
-#             )
-#         return results
-#         #return render_template("main_page.html", comments=Comment.query.all(), errors=errors, results=results)
-#         #return redirect(url_for('index'))
+@app.route("/", methods=["GET", "POST"])
+def index():
+    errors = []
+    results = {}
+    if request.method == "POST":
+        #comment = Comment(content=request.form["contents"])
+        #db.session.add(comment)
+        #db.session.commit()
+        try:
+            text = request.form['contents']
+        except:
+            errors.append(
+                "Unable to get URL. Please make sure it's valid and try again."
+            )
+    return render_template("main_page.html", errors=errors, results=results)
+        #return render_template("main_page.html", comments=Comment.query.all(), errors=errors, results=results)
+        #return redirect(url_for('index'))
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def new_index():
     errors = []
     results = {}
