@@ -4,29 +4,21 @@
 
 <div class="container">
 
-	<div class="row">
-		<form method="POST" action="#">
-			<textarea class="form-control" name="contents" placeholder="Enter a comment"></textarea>
-			<button type="submit" class="btn btn-default">Submit</button>
-		</form>
-	</div>
-	<br>
-	<br>
-	<div class="row">
-		<form action="." method="POST">
-			<textarea class="form-control" name="contents" placeholder="Are we missing something? Enter your feature requests here!"></textarea>
-			<button type="submit" class="btn btn-default">Send request</button>
-		</form>
-	</div>
-
-	  <div class="row">
+  <div class="row">
     <form role="form" method='POST' action='#'>
       <textarea class="form-control" name="contents" placeholder="Enter a comment"></textarea>
       <button type="submit" class="btn btn-default">Submit</button>
     </form>
   </div>
 
-<br>
+  <div class="row">
+    <form method="POST" action="#">
+      <textarea class="form-control" name="contents" placeholder="Enter a comment"></textarea>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+  </div>
+
+  <br>
   {% for error in errors %}
   <h4>{{ error }}</h4>
   {% endfor %}
@@ -56,6 +48,7 @@
 </div>
 <br>
 <br>
+
 
 
 {% endblock %} -->
