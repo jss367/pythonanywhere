@@ -1,6 +1,7 @@
 from flask import Flask, redirect, render_template, request, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from text_analysis import analyze_text
+from text_analysis2 import analyze_text2
 
 import re
 import nltk
@@ -61,7 +62,7 @@ def new_index():
             errors.append(
                 "Unable to get URL. Please make sure it's valid and try again."
             )
-        results = analyze_text(text)
+        results = analyze_text2(text)
         #raw = Comment(content=request.form["contents"])
         #nltk.data.path.append('./nltk_data/')  # set the path
         #tokens = nltk.word_tokenize(raw)
