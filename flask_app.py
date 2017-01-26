@@ -40,7 +40,12 @@ def index():
         comment = Comment(content=request.form["contents"])
         db.session.add(comment)
         db.session.commit()
-        results = analyze_text(comment)
+        try:
+            text = request.form['contents']
+        except:
+            errors.append(
+                "Unable to get URL. Please make sure it's valid and try again."
+            )
         return results
         #return render_template("main_page.html", comments=Comment.query.all(), errors=errors, results=results)
         #return redirect(url_for('index'))
