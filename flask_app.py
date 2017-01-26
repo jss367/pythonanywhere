@@ -37,16 +37,10 @@ def index():
     elif request.method == "POST":
         errors = []
         results = {}
-        comment = Comment(content=request.form["contents"]) #this and the below requests could be much better written
+        comment = Comment(content=request.form["contents"])
         db.session.add(comment)
         db.session.commit()
-        try:
-            text = request.form['contents']
-        except:
-            errors.append(
-                "Unable to get URL. Please make sure it's valid and try again."
-            )
-        results = analyze_text(text)
+        results = analyze_text(comment)
         return results
         #return render_template("main_page.html", comments=Comment.query.all(), errors=errors, results=results)
         #return redirect(url_for('index'))
