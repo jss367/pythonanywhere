@@ -30,7 +30,7 @@ def ave_word_size(tokens):
 
 
 #Let's load that list of all words by freqeuncy of use to see what your rarest words are:
-all_words = pd.read_csv('corpora/all_words')
-def find_rank(word):
+#all_words = pd.read_csv('corpora/all_words')
+#def find_rank(word):
     #print out the Rank of the word:
-    return all_words.loc[all_words['Word'] == word]['Rank']
+#    return all_words.loc[all_words['Word'] == word]['Rank']
