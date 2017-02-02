@@ -55,6 +55,23 @@
       {% endfor %}
     </table>
   </div>
+  <br>
+  <div id="results">
+    <table class="table table-striped" style="max-width: 300px;">
+      <thead>
+        <tr>
+          <th>Verb</th>
+          <th>Rank</th>
+        </tr>
+      </thead>
+      {% for result in verbs%}
+      <tr>
+        <td>{{ result[0] }}</td>
+        <td>{{ result[1] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
   {% endif %}
 </div>
 <br>
