@@ -1,5 +1,6 @@
 import re
 import nltk
+import pandas as pd
 from collections import Counter
 from bs4 import BeautifulSoup
 
@@ -26,3 +27,10 @@ def word_count(tokens):
 
 def ave_word_size(tokens):
     return float(sum(map(len, tokens))) / len(tokens)
+
+
+#Let's load that list of all words by freqeuncy of use to see what your rarest words are:
+all_words = pd.read_csv('corpora/all words')
+def find_rank(word):
+    #print out the Rank of the word:
+    return all_words.loc[all_words['Word'] == word]['Rank']
