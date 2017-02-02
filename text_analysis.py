@@ -4,7 +4,7 @@ import pandas as pd
 from collections import Counter
 from bs4 import BeautifulSoup
 
-def analyze_text2(text):
+def analyze_text(text):
     tokens = clean_text(text)
     num_words = word_count(tokens)
     ave_word = ave_word_size(tokens)
@@ -32,5 +32,5 @@ def ave_word_size(tokens):
 #Let's load that list of all words by freqeuncy of use to see what your rarest words are:
 #all_words = pd.read_csv('corpora/all_words')
 #def find_rank(word):
-    #print out the Rank of the word:
+#    #print out the Rank of the word:
 #    return all_words.loc[all_words['Word'] == word]['Rank']
