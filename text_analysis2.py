@@ -10,9 +10,9 @@ def analyze_text2(text):
     
     results = sorted(
         num_words.items(),
-        ave_word.items(),
         reverse=True
         )
+    results.append(('Average word size', ave_word_size))
     return results
 
 def clean_text(raw_text):
