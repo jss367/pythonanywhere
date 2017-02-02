@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template#, request, url_for
+from flask import Flask, redirect, render_template, request#, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from text_analysis import analyze_text
 from text_analysis2 import analyze_text2
