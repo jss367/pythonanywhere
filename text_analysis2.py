@@ -12,7 +12,7 @@ def analyze_text2(text):
         num_words.items(),
         reverse=True
         )
-    results.append(('Average word size', ave_word))
+    #results.append(('Average word size', ave_word))
 
     results2=[]
     results2.append(('Average word size', ave_word))
