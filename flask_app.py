@@ -45,7 +45,7 @@ def index():
             errors.append(
                 "Unable to get URL. Please make sure it's valid and try again."
             )
-        results = analyze_text2(text)
+        results = analyze_text(text)
     return render_template("main_page.html", errors=errors, results=results)
         #return render_template("main_page.html", comments=Comment.query.all(), errors=errors, results=results)
         #return redirect(url_for('index'))
@@ -62,7 +62,7 @@ def new_index():
             errors.append(
                 "Unable to get URL. Please make sure it's valid and try again."
             )
-        results = analyze_text(text)
+        results = analyze_text2(text)
         #raw = Comment(content=request.form["contents"])
         #nltk.data.path.append('./nltk_data/')  # set the path
         #tokens = nltk.word_tokenize(raw)
