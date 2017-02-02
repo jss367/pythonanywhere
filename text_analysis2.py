@@ -10,6 +10,7 @@ def analyze_text2(text):
     
     results = sorted(
         num_words.items(),
+        ave_word.items(),
         reverse=True
         )
     return results
