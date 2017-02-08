@@ -43,8 +43,9 @@
     <table class="table table-striped" style="max-width: 300px;">
       <thead>
         <tr>
-          <th>Other</th>
-          <th>Features</th>
+          <th>Metrics</th>
+          <th></th>
+          <!-- <th>Features</th> -->
         </tr>
       </thead>
       {% for result in results2%}
@@ -60,14 +61,13 @@
     <table class="table table-striped" style="max-width: 300px;">
       <thead>
         <tr>
-          <th>Verb</th>
-          <th>Rank</th>
+          <th>Verbs</th>
+          <th></th>
         </tr>
       </thead>
       {% for result in verbs%}
       <tr>
-        <td>{{ result[0] }}</td>
-        <td>{{ result[1] }}</td>
+        <td>{{ result }}</td>
       </tr>
       {% endfor %}
     </table>

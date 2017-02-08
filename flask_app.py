@@ -3,12 +3,6 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from text_analysis import analyze_text
 from text_analysis2 import analyze_text2
 
-#import re
-#import nltk
-#from stop_words import stops
-#from collections import Counter
-#from bs4 import BeautifulSoup
-
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
@@ -35,6 +29,8 @@ class Comment(db.Model):
 def index():
     errors = []
     results = {}
+    results2 = {}
+    verbs = {}
     if request.method == "POST":
         #comment = Comment(content=request.form["contents"])
         #db.session.add(comment)
@@ -45,13 +41,16 @@ def index():
             errors.append(
                 "Unable to get URL. Please make sure it's valid and try again."
             )
-        results = analyze_text(text)
-    return render_template("main_page.html", errors=errors, results=results)
+        #results = analyze_text(text)
+        (results, results2, verbs) = analyze_text(text)
+    return render_template("main_page.html", errors=errors, results=results, results2=results2, verbs=verbs)
 
 @app.route('/index', methods=['GET', 'POST'])
 def new_index():
     errors = []
     results = {}
+    results2 = {}
+    verbs = {}
     if request.method == "POST":
         try:
             text = request.form['contents']
@@ -59,8 +58,8 @@ def new_index():
             errors.append(
                 "Unable to get URL. Please make sure it's valid and try again."
             )
-        results = analyze_text2(text)
-    return render_template('index.html', errors=errors, results=results)
+        (results, results2, verbs) = analyze_text2(text)
+    return render_template('index.html', errors=errors, results=results, results2=results2, verbs=verbs)
 
 
 @app.route('/post')
