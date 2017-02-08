@@ -7,19 +7,10 @@
 	<div class="row">
 		<form role="form" method='POST' action='#'>
 			<textarea class="form-control" name="contents" placeholder="Enter a comment"></textarea>
-			<button type="submit" class="btn btn-default">Submit</button>
+			<button type="submit" class="btn btn-default">Test</button>
 		</form>
 	</div>
-	<br>
-	<br>
-	<br>
-	<br>
-	<div class="row">
-		<form method="POST" action="#">
-			<textarea class="form-control" name="contents" placeholder="Are we missing something? Enter your feature requests here!"></textarea>
-			<button type="submit" class="btn btn-default">Send request</button>
-		</form>
-	</div>
+
 
 	<br>
 	{% for error in errors %}
@@ -47,11 +38,50 @@
 			{% endfor %}
 		</table>
 	</div>
+	<br>
+	<div id="results2">
+		<table class="table table-striped" style="max-width: 300px;">
+			<thead>
+				<tr>
+					<th>Metrics</th>
+					<th></th>
+					<!-- <th>Features</th> -->
+				</tr>
+			</thead>
+			{% for result in results2%}
+			<tr>
+				<td>{{ result[0] }}</td>
+				<td>{{ result[1] }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<br>
+	<div id="results">
+		<table class="table table-striped" style="max-width: 300px;">
+			<thead>
+				<tr>
+					<th>Verbs</th>
+					<th></th>
+				</tr>
+			</thead>
+			{% for result in verbs%}
+			<tr>
+				<td>{{ result }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
 	{% endif %}
 </div>
 <br>
 <br>
 
-
+<div class="row">
+	<form method="POST" action="#">
+		<textarea class="form-control" name="contents" placeholder="Are we missing something? Enter your feature requests here!"></textarea>
+		<button type="submit" class="btn btn-default">Send request</button>
+	</form>
+</div>
 
 {% endblock %} -->
