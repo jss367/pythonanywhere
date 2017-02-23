@@ -59,7 +59,7 @@ def new_index():
             errors.append(
                 "Unable to get URL. Please make sure it's valid and try again."
             )
-        (results, verbs) = analyze_text2(text)
+        (results, verbs) = analyze_text(text)
     return render_template('index.html', errors=errors, results=results, verbs=verbs)
 
 
@@ -68,8 +68,6 @@ def post():
     if request.method == "POST":
         return("Jel")
     return render_template('post.html')
-
-
 
 
 
@@ -82,8 +80,6 @@ def analyze():
     verbs = {}
     mycontent = request.form.get('html', '')
     print('Here is the request form as received by flask_app: \n{}'.format(mycontent), file=sys.stderr)
-    html = request.form.get('html', '')
-    print(html, file=sys.stderr)
     print('Hello world!', file=sys.stderr)
     try:
         text = request.form['contents']

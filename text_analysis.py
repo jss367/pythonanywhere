@@ -18,10 +18,13 @@ nominalization_re = re.compile('(?:ion|ions|ism|isms|ty|ties|ment|ments|ness|nes
 def analyze_text(text):
 
 
+    results={}
+
     tokens = clean_text(text)
     #Let's find the number of each different word in the count
     num_words = word_count(tokens)
     total_word_count = sum(num_words.values())
+    results['num_words'] = total_word_count
     ave_word = ave_word_size(tokens)
     tags = tagger(tokens)
     num_sent = count_sentences(text)
@@ -29,14 +32,12 @@ def analyze_text(text):
     word_tag_fd = nltk.FreqDist(tags)
     verb_types = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
     ranked_verbs = [wt[0] for (wt, _) in word_tag_fd.most_common() if wt[1] in verb_types]
-    results = sorted(
-        num_words.items(),
-        reverse=True
-        )
+    # results = sorted(
+    #     num_words.items(),
+    #     reverse=True
+    #     )
     
-
-    num_sent = 3#Right now we're assuming it's three sentences cuase it's late
-
+    results['Ave word size']=ave_word
     verbs=tuple(ranked_verbs)
     #verbs.append(ranked_verbs)
     return (results, verbs)
@@ -52,7 +53,10 @@ def word_count(tokens):
     return raw_word_count
 
 def ave_word_size(tokens):
-    return float(sum(map(len, tokens))) / len(tokens)
+    if len(tokens) > 0:
+        return float(sum(map(len, tokens))) / len(tokens)
+    else:
+        return 0
 
 def tagger(text):
     tags = nltk.pos_tag(text)
