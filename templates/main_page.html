@@ -17,6 +17,8 @@
 	<h4>{{ error }}</h4>
 	{% endfor %}
 	<br>
+
+
 </div>
 <div class="col-sm-5 col-sm-offset-1">
 	{% if results %}
@@ -39,23 +41,6 @@
 		</table>
 	</div>
 	<br>
-	<div id="results2">
-		<table class="table table-striped" style="max-width: 300px;">
-			<thead>
-				<tr>
-					<th>Metrics</th>
-					<th></th>
-					<!-- <th>Features</th> -->
-				</tr>
-			</thead>
-			{% for result in results2%}
-			<tr>
-				<td>{{ result[0] }}</td>
-				<td>{{ result[1] }}</td>
-			</tr>
-			{% endfor %}
-		</table>
-	</div>
 	<br>
 	<div id="results">
 		<table class="table table-striped" style="max-width: 300px;">
