@@ -85,11 +85,13 @@ def sent_count(text):
 
 ''' Now we're going to try to count the number of syllables. We do so by mixing a lookup method (CMUdict) with a algorithmic method'''
 # Method 1:
-d = nltk.corpus.cmudict.dict()
+# This is temporarily commented out becase I can't get cmudict to load
+#d = nltk.corpus.cmudict.dict()
 
 
 def nsyl(word):
-    return [len(list(y for y in x if y[-1].isdigit())) for x in d[word.lower()]]
+    raise KeyError
+    #return [len(list(y for y in x if y[-1].isdigit())) for x in d[word.lower()]]
 
 # Method 2:
 # Note: I can probably delete many of these exceptions and make this much simplier in the case of the words.
