@@ -1,7 +1,7 @@
 import re
 import nltk
 from collections import Counter
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 
 
 # pre-load and pre-compile required variables and methods

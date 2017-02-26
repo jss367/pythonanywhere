@@ -35,8 +35,6 @@ $(document).ready(function(){
 function displayText() {
 	$("#num-words").text(results['num_words']);
 	$("#ave-words").text(results['Ave word size']);
-	$("#fk-score").text(results['Flesch Kincaid']);
-
 	
 	//$("#num-words").text(results['num_words']toString());
 

@@ -71,6 +71,13 @@ def post():
 
 
 
+@app.route('/about', methods=['GET'])
+def about():
+    return render_template('about.html')
+
+
+
+
 @app.route('/analyze', methods=['POST'])
 def analyze():
     print('You made it to analyze', file=sys.stderr)
@@ -80,7 +87,6 @@ def analyze():
     verbs = {}
     mycontent = request.form.get('html', '')
     print('Here is the request form as received by flask_app: \n{}'.format(mycontent), file=sys.stderr)
-    print('Hello world!', file=sys.stderr)
     try:
         text = request.form['contents']
     except:
