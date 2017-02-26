@@ -256,11 +256,11 @@ def flesch_kincaid(text, sentences=None, tokens=None, words=None, syllables=None
     if sentences is None:
         sentences = sent_count(text)
     if tokens is None:
-        tokens = tokinze_text(text)
+        tokens = clean_text(text)
     if words is None:
         words = word_count(tokens)[1]
     if syllables is None:
         syllables = syl_count(tokens)
     ease = 206.835-1.015*(words/sentences) - 84.6*(syllables/words)
     grade = 0.39*(words/sentences) + 11.8*(syllables/words) - 15.59
-    return ease, grade
+    return round(ease, 2), round(grade, 1)
