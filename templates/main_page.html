@@ -6,9 +6,8 @@
 
   <div class="row">
     <form role="form" method='POST' action='#'>
-      <textarea class="form-control" id="user-text" name="contents" placeholder="Enter a comment"></textarea>
+      <textarea class="form-control" id="user-text" name="contents" placeholder="Enter your text here"></textarea>
       <button type="button" id="analyze-button" class="btn btn-default">Go!</button>
-      <button type="submit" id="analyze-button2" class="btn btn-default">Former Button</button>
     </form>
   </div>
 
@@ -29,11 +28,10 @@
                 <th>Result</th>
               </tr>
             </thead>
-            <tr> <td>characters</td> <td id="character-count"></td> </tr>
-            <tr> <td>words</td> <td id="num-words"></td> </tr>
+
+            <tr> <td>Words</td> <td id="num-words"></td> </tr>
             <tr> <td>Average word size</td> <td id="ave-words"></td> </tr>
-
-
+            <tr> <td>Reading grade level</td> <td id="fk-score"></td> </tr>
           </table>
         </div>
       </div>
