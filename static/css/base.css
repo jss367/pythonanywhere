@@ -2,6 +2,22 @@ html {
     overflow-y: scroll;
 }
 
+p, td {
+    font-family: 'Verdana' !important;
+}
+
+h2 {
+    font-family: 'Verdana' !important;
+    font-size: 28px;
+}
+
+h3 {
+    font-family: 'Verdana' !important;
+    font-size: 24px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
 .pretty-text {
 	font-size: 21px;
 	font-family: 'Verdana' !important;
