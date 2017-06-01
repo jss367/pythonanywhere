@@ -9,6 +9,12 @@
 {% block content %}
 <div class="container">
     <div class="row">
+    </div>
+    <div class="row">
+        <div class="col-md-8 column-left">
+            <div class="text-large" id="text-entry" contenteditable="true"></div>
+            <div class="text-large" id="text-placeholder">Enter your text here</div>
+            </div>
         <form role="form" method='POST' action='#'>
           <textarea class="form-control" id="user-text" name="contents" placeholder="Enter your text here"></textarea>
           <button type="button" id="analyze-button" class="btn btn-default">Go!</button>

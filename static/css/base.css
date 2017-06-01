@@ -3,7 +3,7 @@ html {
 }
 
 p, td {
-    font-family: 'Verdana' !important;
+    font-family: 'Georgia' !important;
 }
 
 h2 {
@@ -18,7 +18,20 @@ h3 {
     margin-bottom: 20px;
 }
 
-.pretty-text {
-	font-size: 21px;
-	font-family: 'Verdana' !important;
+.text-large {
+    font-size: 22px;
+    font-family: 'Georgia' !important;
+}
+
+.text-medium {
+    font-size: 18px;
+    font-family: 'Georgia' !important;
+}
+
+.navbar-all {
+    border-left: 1px solid #DDDDDD;
+}
+
+.navbar-toggle {
+    cursor: pointer;
 }
