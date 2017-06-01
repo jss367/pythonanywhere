@@ -10,9 +10,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
     <script type="text/javascript" src="/static/jquery/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
-        var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-    </script>
-    <!-- if we can't get it from google we'll load the local copy -->
+    {% block javascript %}{% endblock %}
+
     <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='jquery.js') }}">\x3C/script>')
         var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
