@@ -1,3 +1,8 @@
 html {
     overflow-y: scroll;
 }
+
+.pretty-text {
+	font-size: 21px;
+	font-family: 'Verdana' !important;
+}
