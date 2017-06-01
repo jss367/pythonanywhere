@@ -15,7 +15,7 @@
     <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='jquery.js') }}">\x3C/script>')
         var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
-    {% block javascript %}{% endblock %}
+
 </head>
 
 <body>
