@@ -33,9 +33,7 @@ def analyze_text(text):
     tags = tagger(tokens)
     num_sent = sent_count(text)
     # Let's look at all the verbs and sort them by most common:
-    word_tag_fd = nltk.FreqDist(tags)
-    verb_types = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
-    ranked_verbs = [wt[0] for (wt, _) in word_tag_fd.most_common() if wt[1] in verb_types]
+    parts_of_speech = find_pos(tokens)
     # results = sorted(
     #     num_words.items(),
     #     reverse=True
@@ -264,3 +262,71 @@ def flesch_kincaid(text, sentences=None, tokens=None, words=None, syllables=None
     ease = 206.835-1.015*(words/sentences) - 84.6*(syllables/words)
     grade = 0.39*(words/sentences) + 11.8*(syllables/words) - 15.59
     return round(ease, 2), round(grade, 1)
+
+
+# This function is from the Part of Speech Finder notebook
+def find_pos(tokens):
+    
+    '''This function accepts tokens as an input and returns a list of all the parts of speech.
+    Note that some words are return twice:
+    -Nouns are separated into common and proper as well as grouped together
+    -Modals are added to verbs are well as returned separately'''
+    
+    tagged = nltk.pos_tag(tokens)
+
+    # Now we devide them into groups
+    # Note that IN can be either a preposition or a conjunction, for now we're going to list it with the prepositions
+    common_noun_pos = ['NN', 'NNS']
+    common_nouns = []
+    verb_pos = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
+    verbs=[]
+    adjective_pos = ['JJ', 'JJR', 'JJS']
+    adjectives = []
+    pronoun_pos = ['PRP', 'PRP$', 'WP', 'WP$']
+    pronouns = []
+    adverb_pos = ['RB', 'RBR', 'RBS', 'WRB']
+    adverbs = []
+    proper_noun_pos = ['NNP', 'NNPS']
+    proper_nouns = []
+    conjunction_pos = ['CC']
+    conjunctions = []
+    preposition_pos = ['IN', 'TO']
+    prepositions = []
+    interjection_pos = ['UH']
+    interjections = []
+    modal_pos = ['MD'] # But these are also verbs, so let's make sure they show up as such
+    modals = []
+    tagged_other_pos = ['CD', 'DT', 'EX', 'FW', 'LS', 'PDT', 'POS', 'RP', 'SYM', 'WDT']
+    tagged_others = []
+    other = []
+
+    for idx, token in enumerate(tagged):
+        if token[1] in common_noun_pos:
+            common_nouns.append(token)
+        elif token[1] in verb_pos:
+            verbs.append(token)
+        elif token[1] in adjective_pos:
+            adjectives.append(token)
+        elif token[1] in pronoun_pos:
+            pronouns.append(token)
+        elif token[1] in adverb_pos:
+            adverbs.append(token)
+        elif token[1] in proper_noun_pos:
+            proper_nouns.append(token)
+        elif token[1] in conjunction_pos:
+            conjunctions.append(token)
+        elif token[1] in preposition_pos:
+            prepositions.append(token)
+        elif token[1] in interjection_pos:
+            interjections.append(token)
+        elif token[1] in modal_pos:
+            modals.append(token)
+        elif token[1] in tagged_other_pos:
+            tagged_others.append(token)
+        else:
+            other.append(token)
+
+    verbs.append(modals)
+    nouns = common_nouns + proper_nouns
+    parts_of_speech = [nouns, common_nouns, verbs, adjectives, pronouns, adverbs, proper_nouns, conjunctions, prepositions, interjections, modals]
+    return parts_of_speech
