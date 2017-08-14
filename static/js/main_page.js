@@ -21,6 +21,7 @@ $(document).ready(function(){
             success: function (ret) {
             	//alert('JSON posted: ' + JSON.stringify(ret));
             	results = ret.results
+            	console.log("What follows is what the main_page.js received:")
             	console.log(results)
             	verbs = ret.verbs
             	console.log(verbs)
@@ -29,13 +30,16 @@ $(document).ready(function(){
         });
 	})
 
-
 	});
 
 function displayText() {
 	$("#num-words").text(results['num_words']);
 	$("#ave-words").text(results['Ave word size']);
 	$("#fk-score").text(results['Flesch Kincaid']);
+    $("#unique-words").text(results['num_unique_words']);
+    $("#num-sentences").text(results['num_sentences']);
+    $("#noms").text(results['noms']);
+    $("#light-verbs").text(results['light_verbs']);
 
 	
 	//$("#num-words").text(results['num_words']toString());
