@@ -2,7 +2,8 @@ import re
 import nltk
 import os
 from collections import Counter
-#from bs4 import BeautifulSoup
+
+# from bs4 import BeautifulSoup
 
 
 # pre-load and pre-compile required variables and methods
@@ -16,13 +17,11 @@ newline_re = re.compile('\n["\(\[\{ ]*[A-Z]')
 empty_sent_re = re.compile('^[\n ]*$')
 nominalization_re = re.compile('(?:ion|ions|ism|isms|ty|ties|ment|ments|ness|nesses|ance|ances|ence|ences)$')
 
-
-
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'corpora/light_verbs')) as f:
     dict_light_verbs = f.read().splitlines()
 
-def analyze_text(text):
 
+def analyze_text(text):
     results = {}
 
     tokens = tokinze_text(text)
@@ -30,7 +29,7 @@ def analyze_text(text):
     num_words, total_word_count = word_count(tokens)
     results['num_words'] = total_word_count
     ave_word = ave_word_size(tokens)
-    tags = tagger(tokens)
+    # tags = tagger(tokens)
     num_sent = sent_count(text)
     # Let's look at all the verbs and sort them by most common:
     parts_of_speech = find_pos(tokens)
@@ -39,17 +38,18 @@ def analyze_text(text):
     #     reverse=True
     #     )
     results['Ave word size'] = ave_word
-    ease, grade = flesch_kincaid(text, sentences=num_sent, tokens=tokens, words=total_word_count) #syllables is not sent
+    ease, grade = flesch_kincaid(text, sentences=num_sent, tokens=tokens,
+                                 words=total_word_count)  # syllables is not sent
     results['Flesch Kincaid'] = grade
-    verbs = tuple(ranked_verbs)
+    # verbs = tuple(ranked_verbs)
     # verbs.append(ranked_verbs)
-    return (results, verbs)
+    return results, verbs
 
 
 def tokinze_text(raw_text):
     tokens = nltk.word_tokenize(raw_text)
     return tokens
-    
+
 
 def word_count(tokens):
     '''This takes a string of tokenized texts as an input and returns a collections.Counter of the words and 
@@ -81,15 +81,19 @@ def sent_count(text):
     sent_count = get_sent_count(text)
     return sent_count
 
+
 ''' Now we're going to try to count the number of syllables. We do so by mixing a lookup method (CMUdict) with a algorithmic method'''
+
+
 # Method 1:
 # This is temporarily commented out becase I can't get cmudict to load
-#d = nltk.corpus.cmudict.dict()
+# d = nltk.corpus.cmudict.dict()
 
 
 def nsyl(word):
     raise KeyError
-    #return [len(list(y for y in x if y[-1].isdigit())) for x in d[word.lower()]]
+    # return [len(list(y for y in x if y[-1].isdigit())) for x in d[word.lower()]]
+
 
 # Method 2:
 # Note: I can probably delete many of these exceptions and make this much simplier in the case of the words.
@@ -97,14 +101,13 @@ def nsyl(word):
 
 
 def sylco(word):
-
     word = word.lower()
 
     # exception_add are words that need extra syllables
     # exception_del are words that need less syllables
 
-    #exception_add = ['serious','crucial']
-    #exception_del = ['fortunately','unfortunately']
+    # exception_add = ['serious','crucial']
+    # exception_del = ['fortunately','unfortunately']
 
     co_one = ['coif', 'coign', 'coiffe', 'coof']
     co_two = ['coapt', 'coinci']
@@ -126,7 +129,8 @@ def sylco(word):
     if word[-2:] == "es" or word[-2:] == "ed":
         doubleAndtripple_1 = len(re.findall(r'[eaoui][eaoui]', word))
         if doubleAndtripple_1 > 1 or len(re.findall(r'[eaoui][^eaoui]', word)) > 1:
-            if word[-3:] == "ted" or word[-3:] == "tes" or word[-3:] == "ses" or word[-3:] == "ied" or word[-3:] == "ies":
+            if word[-3:] == "ted" or word[-3:] == "tes" or word[-3:] == "ses" or word[-3:] == "ied" or word[
+                                                                                                       -3:] == "ies":
                 pass
             else:
                 disc += 1
@@ -229,6 +233,7 @@ def sylco(word):
     # calculate the output
     return numVowels - disc + syls
 
+
 # Combining the methods
 
 
@@ -259,19 +264,18 @@ def flesch_kincaid(text, sentences=None, tokens=None, words=None, syllables=None
         words = word_count(tokens)[1]
     if syllables is None:
         syllables = syl_count(tokens)
-    ease = 206.835-1.015*(words/sentences) - 84.6*(syllables/words)
-    grade = 0.39*(words/sentences) + 11.8*(syllables/words) - 15.59
+    ease = 206.835 - 1.015 * (words / sentences) - 84.6 * (syllables / words)
+    grade = 0.39 * (words / sentences) + 11.8 * (syllables / words) - 15.59
     return round(ease, 2), round(grade, 1)
 
 
 # This function is from the Part of Speech Finder notebook
 def find_pos(tokens):
-    
     '''This function accepts tokens as an input and returns a list of all the parts of speech.
     Note that some words are return twice:
     -Nouns are separated into common and proper as well as grouped together
     -Modals are added to verbs are well as returned separately'''
-    
+
     tagged = nltk.pos_tag(tokens)
 
     # Now we devide them into groups
@@ -279,7 +283,7 @@ def find_pos(tokens):
     common_noun_pos = ['NN', 'NNS']
     common_nouns = []
     verb_pos = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
-    verbs=[]
+    verbs = []
     adjective_pos = ['JJ', 'JJR', 'JJS']
     adjectives = []
     pronoun_pos = ['PRP', 'PRP$', 'WP', 'WP$']
@@ -294,7 +298,7 @@ def find_pos(tokens):
     prepositions = []
     interjection_pos = ['UH']
     interjections = []
-    modal_pos = ['MD'] # But these are also verbs, so let's make sure they show up as such
+    modal_pos = ['MD']  # But these are also verbs, so let's make sure they show up as such
     modals = []
     tagged_other_pos = ['CD', 'DT', 'EX', 'FW', 'LS', 'PDT', 'POS', 'RP', 'SYM', 'WDT']
     tagged_others = []
@@ -328,5 +332,6 @@ def find_pos(tokens):
 
     verbs.append(modals)
     nouns = common_nouns + proper_nouns
-    parts_of_speech = [nouns, common_nouns, verbs, adjectives, pronouns, adverbs, proper_nouns, conjunctions, prepositions, interjections, modals]
+    parts_of_speech = [nouns, common_nouns, verbs, adjectives, pronouns, adverbs, proper_nouns, conjunctions,
+                       prepositions, interjections, modals]
     return parts_of_speech

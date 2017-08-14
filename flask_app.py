@@ -1,5 +1,5 @@
 from flask import Flask, redirect, jsonify, render_template, request#, url_for
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from text_analysis import analyze_text
 from text_analysis2 import analyze_text2
 import sys
@@ -32,8 +32,8 @@ def index():
     results = {}
     verbs = {}
     if request.method == "POST":
-        #comment = Comment(content=request.form["contents"])
-        #db.session.add(comment)
+        # comment = Comment(content=request.form["contents"])
+        # db.session.add(comment)
         #db.session.commit()
         try:
             text = request.form['contents']
