@@ -45,7 +45,7 @@ def analyze_text(text):
     # Then find the average word size
     ave_word = ave_word_size(tokens)
     results['Ave word size'] = ave_word
-    # tags = tagger(tokens)
+    # tags = nltk.pos_tag(tokens)
     # Count the sentences and add sentence count to results
     num_sent = sent_count(text)
     results['num_sentences'] = num_sent
@@ -129,16 +129,18 @@ def find_weak_wording(words, word2token_map, num_tokens, results):
     # Now let's enumerate over words
     for idx_word, word in enumerate(words):
         idx = word2token_map[idx_word]
-        # Find nominalizations with the following criteria: long, not proper nouns, and end in a nominalization pattern
-        nominalizations[idx] = (results['number_of_characters'][idx] > 7) and (results['parts_of_speech'][idx] != 'NNP') \
-                               and (nominalization_re.search(word) is not None)
-        # If the word is any verb part of speech and its stem is in weak verbs...
-        light_verbs[idx] = (results['parts_of_speech'][idx][:2][1] in verb_pos) and (
-            results['stems'][idx] in dict_light_verbs)
-        # if light_verbs[idx] and auxiliary_verbs[idx]:
-        #    light_verbs[idx] = False
+        if results['number_of_characters'][idx] is not None:
+            # Find nominalizations with the following criteria: long, not proper nouns, and end in a nominalization pattern
+            nominalizations[idx] = (results['number_of_characters'][idx] > 7) and (results['parts_of_speech'][idx] != 'NNP') \
+                                   and (nominalization_re.search(word) is not None)
+            # If the word is any verb part of speech and its stem is in weak verbs...
+            light_verbs[idx] = (results['parts_of_speech'][idx][:2][1] in verb_pos) and (
+                results['stems'][idx] in dict_light_verbs)
+            # if light_verbs[idx] and auxiliary_verbs[idx]:
+            #    light_verbs[idx] = False
 
     return nominalizations, light_verbs
+
 
 
 def word_count(tokens):
@@ -157,12 +159,6 @@ def ave_word_size(tokens):
         return float(sum(map(len, tokens))) / len(tokens)
     else:
         return 0
-
-
-def tagger(tokens):
-    '''This function inputs tokens'''
-    tags = nltk.pos_tag(tokens)
-    return tags
 
 
 def sent_count(text):
