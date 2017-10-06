@@ -16,7 +16,7 @@
             <div class="pretty-text" id="text-placeholder">Enter your text here</div>
         </div> -->
         <form role="form" method='POST' action='#'>
-          <textarea class="form-control" id="user-text" name="contents" placeholder="Enter your up two 2000 words at a time"></textarea>
+          <textarea class="form-control" id="user-text" name="contents" placeholder="Enter up two 2000 words at a time"></textarea>
           <button type="button" id="analyze-button" class="btn btn-success btn-lg">Go!</button>
       </form>
   </div>
@@ -29,8 +29,8 @@
 
       <div class="col-md-4 column-right">
 
-        <div id="metrics-tables">
-          <table class="table table-striped" style="max-width: 300px;">
+        <div id="metrics-tables" class="wrap">
+          <table class="table table-striped" style="max-width: 1000px;">
             <thead>
               <tr>
                 <th>Metric</th>
@@ -43,8 +43,9 @@
         <tr> <td>Number of unique words</td> <td id="unique-words"></td> </tr>
         <tr> <td>Average word size</td> <td id="ave-words"></td> </tr>
         <tr> <td>Reading grade level</td> <td id="fk-score"></td> </tr>
-        <tr> <td>Nominalizations</td> <td id="noms"></td> </tr>
-        <tr> <td>Light verbs</td> <td id="light-verbs"></td> </tr>
+        <tr> <td>Sentences to review</td> <td id="weak-sent"></td> </tr>
+        
+
     </table>
 </div>
 

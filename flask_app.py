@@ -1,7 +1,6 @@
 from flask import Flask, redirect, jsonify, render_template, request  # , url_for
 from flask_sqlalchemy import SQLAlchemy
 from text_analysis import analyze_text
-from text_analysis2 import analyze_text2
 import sys
 
 app = Flask(__name__)

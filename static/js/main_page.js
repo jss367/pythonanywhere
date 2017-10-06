@@ -40,6 +40,9 @@ function displayText() {
     $("#num-sentences").text(results['num_sentences']);
     $("#noms").text(results['noms']);
     $("#light-verbs").text(results['light_verbs']);
+    $("#weak-sent").text(results['weak_sent']);
+    $("#weak-sent-num").text(results['weak_sent_num']);
+
 
 	
 	//$("#num-words").text(results['num_words']toString());

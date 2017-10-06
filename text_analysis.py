@@ -22,13 +22,6 @@ def open_corpora(filename, csv=False):
         return pd.read_csv(file, index_col=0) 
     
     
-# # Open the light verbs file and make them into a list
-# try:
-#     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'corpora/light_verbs')) as f:
-#         dict_light_verbs = f.read().splitlines()
-# except NameError:
-#     with open('corpora/light_verbs') as f:
-#         dict_light_verbs = f.read().splitlines()
 dict_light_verbs = open_corpora('light_verbs')
 all_words_df = open_corpora('all_words2.csv', csv=True)
 
@@ -42,13 +35,18 @@ def analyze_text(text):
     sents = tokenizer.tokenize(text)
     tagged_texts = nltk.pos_tag_sents(map(nltk.word_tokenize, sents))
     
+    weak_sent_num = []
+    weak_sent = []
     for i in range(len(tagged_texts)):
         bad_sent, nominalization, light_verb = find_weak_wording(tagged_texts[i])
         if bad_sent:
             # Check if the nominalization occurs at the end or is a common word
             if nominalization != tagged_texts[i][-2][0] and not is_common(nominalization.lower()):
-                print("Sentence {num} might have poor wording: ".format(num=i+1))
-                print(bold(nominalization, sents[i]))
+                weak_sent_num.append(i+1)
+                weak_sent.append(sents[i] + '                ')
+                
+    results['weak_sent_num'] = weak_sent_num
+    results['weak_sent'] = weak_sent
     
     # Doing the part for bad sent
     flat_tagged = [item for sublist in tagged_texts for item in sublist]
@@ -73,15 +71,6 @@ def analyze_text(text):
     #     reverse=True
     #     )
 
-    # Now let's make words, word2token_map, and stems
-#     words = []
-#     # We'll use word2token_map to keep the index number of all the words
-#     word2token_map = []
-#     for idx, token in enumerate(tokens):
-#         if token[0].isalnum() or (token in ["'m", "'re", "'ve", "'d", "'ll"]):
-#             words.append(token.lower())
-#             word2token_map.append(idx)
-
 
     # We'll need to get the number of characters per word
     # count number of characters per word
@@ -93,24 +82,6 @@ def analyze_text(text):
                                  words=total_word_count)  # syllables is not sent
     results['Flesch Kincaid'] = grade
 
-#     bsent, nominalization_bools, light_verb_bools = find_weak_wording(words, word2token_map, num_tokens, results)
-
-#     # Now that we have the nominalizations and light verbs locations, make a list of them
-#     nominalization_locations = []
-#     # OK, now let's see what we've got
-#     for idx, nom in enumerate(nominalization_bools):
-#         if nom:
-#             nominalization_locations.append(idx)
-#     results['noms'] = [(tokens[word]) for word in nominalization_locations]
-
-#     light_verb_locations = []
-#     for idx, light in enumerate(light_verb_bools):
-#         if light:
-#             light_verb_locations.append(idx)
-#             # print(tokens[idx])
-#     results['light_verbs'] = [(tokens[word]) for word in light_verb_locations]
-    # verbs = tuple(ranked_verbs)
-    # verbs.append(ranked_verbs)
     return results
 
 def check_nom(word_pos_tuple):
@@ -175,13 +146,17 @@ def is_common(word, threshold=1500):
 
 def ave_word_size(tokens):
     if len(tokens) > 0:
-        return float(sum(map(len, tokens))) / len(tokens)
+        return round(float(sum(map(len, tokens))) / len(tokens), 2)
     else:
         return 0
 
-def bold(word, sentence):
-    if word in sentence:
-        return sentence.split(word)[0] + '\033[1m' + word + '\033[0m' + sentence.split(word)[1]
+# def bold(word, sentence):
+#     if word in sentence:
+#         return sentence.split(word)[0] + '\033[1m' + word + '\033[0m' + sentence.split(word)[1]
+    
+# def bold(word, sentence):
+#     if word in sentence:
+#         return sentence.split(word)[0] + '<p><b>' + word + '</b></p>' + sentence.split(word)[1]
 
 
 def sent_count(text):
