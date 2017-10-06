@@ -8,15 +8,29 @@ from collections import Counter
 stemmer = nltk.PorterStemmer()
 
 verb_pos = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
-
-# Open the light verbs file and make them into a list
-try:
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'corpora/light_verbs')) as f:
-        dict_light_verbs = f.read().splitlines()
-except NameError:
-    with open('corpora/light_verbs') as f:
-        dict_light_verbs = f.read().splitlines()
-
+        
+        
+def open_corpora(filename, csv=False):
+    try:
+        file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'corpora/' + filename)
+    except NameError:
+        file = 'corpora/' + filename
+    if not csv:
+        with open(file) as f:
+            return f.read().splitlines()
+    else:
+        return pd.read_csv(file, index_col=0) 
+    
+    
+# # Open the light verbs file and make them into a list
+# try:
+#     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'corpora/light_verbs')) as f:
+#         dict_light_verbs = f.read().splitlines()
+# except NameError:
+#     with open('corpora/light_verbs') as f:
+#         dict_light_verbs = f.read().splitlines()
+dict_light_verbs = open_corpora('light_verbs')
+all_words_df = open_corpora('all_words2.csv')
 
 def analyze_text(text):
     # results is where we'll hold and send our final product
@@ -60,13 +74,13 @@ def analyze_text(text):
     #     )
 
     # Now let's make words, word2token_map, and stems
-    words = []
-    # We'll use word2token_map to keep the index number of all the words
-    word2token_map = []
-    for idx, token in enumerate(tokens):
-        if token[0].isalnum() or (token in ["'m", "'re", "'ve", "'d", "'ll"]):
-            words.append(token.lower())
-            word2token_map.append(idx)
+#     words = []
+#     # We'll use word2token_map to keep the index number of all the words
+#     word2token_map = []
+#     for idx, token in enumerate(tokens):
+#         if token[0].isalnum() or (token in ["'m", "'re", "'ve", "'d", "'ll"]):
+#             words.append(token.lower())
+#             word2token_map.append(idx)
 
 
     # We'll need to get the number of characters per word
@@ -152,11 +166,6 @@ def word_count(tokens):
     return raw_word_count, total_word_count, unique_words
 
 
-fname = 'corpora/all_words2.csv'
-if os.path.isfile(fname):
-    all_words_df = pd.read_csv(fname, index_col=0)
-else:
-    print("cannot find word list")
 def is_common(word, threshold=1500):
     if word in all_words_df['Word'].tolist():
         if all_words_df[all_words_df['Word']==word].index.values[0] < threshold:
@@ -173,11 +182,6 @@ def ave_word_size(tokens):
 def bold(word, sentence):
     if word in sentence:
         return sentence.split(word)[0] + '\033[1m' + word + '\033[0m' + sentence.split(word)[1]
-
-# def tagger(tokens):
-#     '''This function inputs tokens'''
-#     tags = nltk.pos_tag(tokens)
-#     return tags
 
 
 def sent_count(text):
