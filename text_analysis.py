@@ -30,7 +30,7 @@ def open_corpora(filename, csv=False):
 #     with open('corpora/light_verbs') as f:
 #         dict_light_verbs = f.read().splitlines()
 dict_light_verbs = open_corpora('light_verbs')
-all_words_df = open_corpora('all_words2.csv')
+all_words_df = open_corpora('all_words2.csv', csv=True)
 
 def analyze_text(text):
     # results is where we'll hold and send our final product
