@@ -10,10 +10,12 @@ stemmer = nltk.PorterStemmer()
 verb_pos = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
 
 # Open the light verbs file and make them into a list
-with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'corpora/light_verbs')) as f:
-    dict_light_verbs = f.read().splitlines()
-# with open('corpora/light_verbs') as f:
-#     dict_light_verbs = f.read().splitlines()
+try:
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'corpora/light_verbs')) as f:
+        dict_light_verbs = f.read().splitlines()
+except NameError:
+    with open('corpora/light_verbs') as f:
+        dict_light_verbs = f.read().splitlines()
 
 
 def analyze_text(text):
@@ -35,8 +37,8 @@ def analyze_text(text):
                 print(bold(nominalization, sents[i]))
     
     # Doing the part for bad sent
-    
-    tokens = nltk.word_tokenize(text)
+    flat_tagged = [item for sublist in tagged_texts for item in sublist]
+    tokens = [tags for (tags, pos) in flat_tagged]
 
     # Then find the number of each different word in the count and add it to results
     num_words, total_word_count, unique_words = word_count(tokens)
