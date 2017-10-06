@@ -10,10 +10,10 @@ stemmer = nltk.PorterStemmer()
 verb_pos = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
 
 # Open the light verbs file and make them into a list
-# with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'corpora/light_verbs')) as f:
-#     dict_light_verbs = f.read().splitlines()
-with open('corpora/light_verbs') as f:
+with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'corpora/light_verbs')) as f:
     dict_light_verbs = f.read().splitlines()
+# with open('corpora/light_verbs') as f:
+#     dict_light_verbs = f.read().splitlines()
 
 
 def analyze_text(text):
@@ -101,6 +101,8 @@ def check_nom(word_pos_tuple):
     """
     Accepts a tuple (word, pos_tag)
     """
+    nominalization_re = re.compile('(?:ion|ions|ism|isms|ize|ty|ties|ment|ments|ness|nesses|ance|ances|ence|ences)$')
+    nominalization_re_2 = re.compile('(?:tion|ment|ence|ance)$')
     if len(word_pos_tuple[0]) > 7 and nominalization_re.search(word_pos_tuple[0]) and word_pos_tuple[1] != 'NNP': # and check that it's not a proper noun
         return True
     else:
@@ -119,8 +121,6 @@ def find_weak_wording(sentence):
     '''
     This function accepts a list of sentences where each word in the sentences has been tokenized and tagged
     '''
-    nominalization_re = re.compile('(?:ion|ions|ism|isms|ize|ty|ties|ment|ments|ness|nesses|ance|ances|ence|ences)$')
-    nominalization_re_2 = re.compile('(?:tion|ment|ence|ance)$')
 
     has_nom = False
     has_light = False
