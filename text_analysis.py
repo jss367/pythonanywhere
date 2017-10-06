@@ -1,33 +1,18 @@
 import re
 import nltk
 import os
+import pandas as pd
 from collections import Counter
 
 # Load the stemmer
 stemmer = nltk.PorterStemmer()
 
-# pre-load and pre-compile required variables and methods
-html_div_br_div_re = re.compile('</div><div><br></div>')
-html_newline_re = re.compile('(<br|</div|</p)')
-quotation_re = re.compile(u'[\u00AB\u00BB\u201C\u201D\u201E\u201F\u2033\u2036\u301D\u301E]')
-apostrophe_re = re.compile(u'[\u02BC\u2019\u2032]')
-punct_error_re = re.compile('^(["\]\)\}]+)(?:[ \n]|$)')
-ellipsis_re = re.compile('\.\.\.["\(\)\[\]\{\} ] [A-Z]')
-newline_re = re.compile('\n["\(\[\{ ]*[A-Z]')
-empty_sent_re = re.compile('^[\n ]*$')
-nominalization_re = re.compile('(?:ion|ions|ism|isms|ty|ties|ment|ments|ness|nesses|ance|ances|ence|ences)$')
-
-# Let's build our dictionaries here
-# We'll just do the ones we need. Let's do the irregular stems
-with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'corpora/irregular-stems')) as f:
-    dict_irregular_stems_lines = f.read().splitlines()
-    dict_irregular_stems_draft = [line.split(',') for line in dict_irregular_stems_lines]
-    dict_irregular_stems = {}
-    for stem_old, stem_new in dict_irregular_stems_draft:
-        dict_irregular_stems[stem_old] = stem_new
+verb_pos = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
 
 # Open the light verbs file and make them into a list
-with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'corpora/light_verbs')) as f:
+# with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'corpora/light_verbs')) as f:
+#     dict_light_verbs = f.read().splitlines()
+with open('corpora/light_verbs') as f:
     dict_light_verbs = f.read().splitlines()
 
 
@@ -35,22 +20,38 @@ def analyze_text(text):
     # results is where we'll hold and send our final product
     results = {}
     # First we tokenize the text
+    
+    # Doing the part for bad sent
+    tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+    sents = tokenizer.tokenize(text)
+    tagged_texts = nltk.pos_tag_sents(map(nltk.word_tokenize, sents))
+    
+    for i in range(len(tagged_texts)):
+        bad_sent, nominalization, light_verb = find_weak_wording(tagged_texts[i])
+        if bad_sent:
+            # Check if the nominalization occurs at the end or is a common word
+            if nominalization != tagged_texts[i][-2][0] and not is_common(nominalization.lower()):
+                print("Sentence {num} might have poor wording: ".format(num=i+1))
+                print(bold(nominalization, sents[i]))
+    
+    # Doing the part for bad sent
+    
     tokens = nltk.word_tokenize(text)
-    num_tokens = len(tokens)
+
     # Then find the number of each different word in the count and add it to results
     num_words, total_word_count, unique_words = word_count(tokens)
     results['num_words'] = total_word_count
     results['num_unique_words'] = len(unique_words)
     results['lexical_diversity'] = len(unique_words) / total_word_count
     # Then find the average word size
-    ave_word = ave_word_size(tokens)
-    results['Ave word size'] = ave_word
-    # tags = nltk.pos_tag(tokens)
+    results['Ave word size'] = ave_word_size(tokens)
+    tags = nltk.pos_tag(tokens)
     # Count the sentences and add sentence count to results
     num_sent = sent_count(text)
     results['num_sentences'] = num_sent
     # Let's look at all the verbs and sort them by most common:
     parts_of_speech = find_pos(tokens)
+    
     # results = sorted(
     #     num_words.items(),
     #     reverse=True
@@ -65,19 +66,6 @@ def analyze_text(text):
             words.append(token.lower())
             word2token_map.append(idx)
 
-    # find word stems
-    # To do that we'll start by building a stemmer
-    def stem_better(word):
-        stem = stemmer.stem(word.lower())
-        if stem in dict_irregular_stems:
-            stem = dict_irregular_stems[stem]
-        return stem
-
-    # Now let's stem the words
-    stems = [stem_better(word) for word in words]
-    results['stems'] = [None] * len(tokens)
-    for idx, stem in enumerate(stems):
-        results['stems'][word2token_map[idx]] = stem
 
     # We'll need to get the number of characters per word
     # count number of characters per word
@@ -89,59 +77,67 @@ def analyze_text(text):
                                  words=total_word_count)  # syllables is not sent
     results['Flesch Kincaid'] = grade
 
-    nominalization_bools, light_verb_bools = find_weak_wording(words, word2token_map, num_tokens, results)
+#     bsent, nominalization_bools, light_verb_bools = find_weak_wording(words, word2token_map, num_tokens, results)
 
-    # Now that we have the nominalizations and light verbs locations, make a list of them
-    nominalization_locations = []
-    # OK, now let's see what we've got
-    for idx, nom in enumerate(nominalization_bools):
-        if nom:
-            nominalization_locations.append(idx)
-    results['noms'] = [(tokens[word]) for word in nominalization_locations]
+#     # Now that we have the nominalizations and light verbs locations, make a list of them
+#     nominalization_locations = []
+#     # OK, now let's see what we've got
+#     for idx, nom in enumerate(nominalization_bools):
+#         if nom:
+#             nominalization_locations.append(idx)
+#     results['noms'] = [(tokens[word]) for word in nominalization_locations]
 
-    light_verb_locations = []
-    for idx, light in enumerate(light_verb_bools):
-        if light:
-            light_verb_locations.append(idx)
-            # print(tokens[idx])
-    results['light_verbs'] = [(tokens[word]) for word in light_verb_locations]
+#     light_verb_locations = []
+#     for idx, light in enumerate(light_verb_bools):
+#         if light:
+#             light_verb_locations.append(idx)
+#             # print(tokens[idx])
+#     results['light_verbs'] = [(tokens[word]) for word in light_verb_locations]
     # verbs = tuple(ranked_verbs)
     # verbs.append(ranked_verbs)
     return results
 
+def check_nom(word_pos_tuple):
+    """
+    Accepts a tuple (word, pos_tag)
+    """
+    if len(word_pos_tuple[0]) > 7 and nominalization_re.search(word_pos_tuple[0]) and word_pos_tuple[1] != 'NNP': # and check that it's not a proper noun
+        return True
+    else:
+        return False
+    
+def check_light(word_pos_tuple):
+    """
+    Accepts a tuple (word, pos_tag)
+    """
+    if stemmer.stem(word_pos_tuple[0]) in dict_light_verbs and word_pos_tuple[1] in verb_pos:
+        return True
+    else:
+        return False
 
-def find_weak_wording(words, word2token_map, num_tokens, results):
-    '''This function finds everything that we can find by enumerating over "words".
-    This is done to maximize efficiency.
-    The things that can be found are: nominalizations, light verbs, and filler words
-
-    We're also passing data were, but we're not going to add to it in the function. We are
-    going to use number_of_characters and parts_of_speech
-
-    #Can I use nominalization_re.search here?
+def find_weak_wording(sentence):
     '''
-    nominalization_re = re.compile('(?:ion|ions|ism|isms|ty|ties|ment|ments|ness|nesses|ance|ances|ence|ences)$')
-    nominalizations = [None] * num_tokens
-    light_verbs = [None] * num_tokens
-    filler_words = [None] * num_tokens
+    This function accepts a list of sentences where each word in the sentences has been tokenized and tagged
+    '''
+    nominalization_re = re.compile('(?:ion|ions|ism|isms|ize|ty|ties|ment|ments|ness|nesses|ance|ances|ence|ences)$')
+    nominalization_re_2 = re.compile('(?:tion|ment|ence|ance)$')
 
-    verb_pos = ['VB', 'VBD', 'VBG', 'VBN', 'VBP', 'VBZ']
+    has_nom = False
+    has_light = False
+    bad_sent = False
+    nominalization = None
+    light_verb = None
     # Now let's enumerate over words
-    for idx_word, word in enumerate(words):
-        idx = word2token_map[idx_word]
-        if results['number_of_characters'][idx] is not None:
-            # Find nominalizations with the following criteria: long, not proper nouns, and end in a nominalization pattern
-            nominalizations[idx] = (results['number_of_characters'][idx] > 7) and (results['parts_of_speech'][idx] != 'NNP') \
-                                   and (nominalization_re.search(word) is not None)
-            # If the word is any verb part of speech and its stem is in weak verbs...
-            light_verbs[idx] = (results['parts_of_speech'][idx][:2][1] in verb_pos) and (
-                results['stems'][idx] in dict_light_verbs)
-            # if light_verbs[idx] and auxiliary_verbs[idx]:
-            #    light_verbs[idx] = False
-
-    return nominalizations, light_verbs
-
-
+    for idx, word_pos_tuple in enumerate(sentence):
+        if check_nom(word_pos_tuple):
+            has_nom = True
+            nominalization = word_pos_tuple[0]
+        if check_light(word_pos_tuple):
+            has_light = True
+            light_verb = word_pos_tuple[0]
+    if has_nom and has_light:
+        bad_sent = True
+    return(bad_sent, nominalization, light_verb)
 
 def word_count(tokens):
     '''This takes a string of tokenized texts as an input and returns a collections.Counter of the words and 
@@ -154,11 +150,32 @@ def word_count(tokens):
     return raw_word_count, total_word_count, unique_words
 
 
+fname = 'corpora/all_words2.csv'
+if os.path.isfile(fname):
+    all_words_df = pd.read_csv(fname, index_col=0)
+else:
+    print("cannot find word list")
+def is_common(word, threshold=1500):
+    if word in all_words_df['Word'].tolist():
+        if all_words_df[all_words_df['Word']==word].index.values[0] < threshold:
+            return True
+    else:
+        return False
+
 def ave_word_size(tokens):
     if len(tokens) > 0:
         return float(sum(map(len, tokens))) / len(tokens)
     else:
         return 0
+
+def bold(word, sentence):
+    if word in sentence:
+        return sentence.split(word)[0] + '\033[1m' + word + '\033[0m' + sentence.split(word)[1]
+
+# def tagger(tokens):
+#     '''This function inputs tokens'''
+#     tags = nltk.pos_tag(tokens)
+#     return tags
 
 
 def sent_count(text):
