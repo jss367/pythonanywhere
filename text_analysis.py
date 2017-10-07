@@ -32,6 +32,10 @@ def analyze_text(text):
     
     # Doing the part for bad sent
     tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+    
+    # Change any directed quotes to ASCII double quotes
+    text = re.sub('[“”]', '"', text)
+    
     sents = tokenizer.tokenize(text)
     tagged_texts = nltk.pos_tag_sents(map(nltk.word_tokenize, sents))
     
@@ -58,7 +62,7 @@ def analyze_text(text):
     results['num_unique_words'] = len(unique_words)
     results['lexical_diversity'] = len(unique_words) / total_word_count
     # Then find the average word size
-    results['Ave word size'] = ave_word_size(tokens)
+    results['ave_word_size'] = ave_word_size(tokens)
     tags = nltk.pos_tag(tokens)
     # Count the sentences and add sentence count to results
     num_sent = sent_count(text)

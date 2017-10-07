@@ -46,31 +46,6 @@ def index():
     return render_template("main_page.html", errors=errors, results=results, verbs=verbs)
 
 
-@app.route('/index', methods=['GET', 'POST'])
-def new_index():
-    errors = []
-    results = {}
-
-    verbs = {}
-    text = "The text is not being found"
-    if request.method == "POST":
-        try:
-            text = request.form['contents']
-        except:
-            errors.append(
-                "Unable to get URL. Please make sure it's valid and try again."
-            )
-        (results, verbs) = analyze_text(text)
-    return render_template('index.html', errors=errors, results=results, verbs=verbs)
-
-
-@app.route('/post', methods=['GET', 'POST'])
-def post():
-    if request.method == "POST":
-        return "Jel"
-    return render_template('post.html')
-
-
 @app.route('/about', methods=['GET'])
 def about():
     return render_template('about.html')

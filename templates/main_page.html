@@ -8,46 +8,52 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-    </div>
-    <div class="row">
+  <div class="row">
+  </div>
+  <div class="row">
 <!--         <div class="col-md-8 column-left">
             <div class="pretty-text" id="text-entry" contenteditable="true"></div>
             <div class="pretty-text" id="text-placeholder">Enter your text here</div>
-        </div> -->
-        <form role="form" method='POST' action='#'>
-          <textarea class="form-control" id="user-text" name="contents" placeholder="Enter up two 2000 words at a time"></textarea>
-          <button type="button" id="analyze-button" class="btn btn-success btn-lg">Go!</button>
-      </form>
-  </div>
-  <script src="/static/js/main_page.js"></script>
+          </div> -->
+          <form role="form" method='POST' action='#'>
+            <textarea class="form-control" id="user-text" name="contents" placeholder="Enter up to 2000 words at a time"></textarea>
+            <button type="button" id="analyze-button" class="btn btn-success btn-lg">Go!</button>
+          </form>
+        </div>
+        <script src="/static/js/main_page.js"></script>
 
-  <div class="container">
-    <h2>Results</h2>
+        <div class="container">
+          <h2>Results</h2>
 
-    <div class="row">
+          <div class="row">
 
-      <div class="col-md-4 column-right">
+            <div class="col-md-4 column-right">
 
-        <div id="metrics-tables" class="wrap">
-          <table class="table table-striped" style="max-width: 1000px;">
-            <thead>
-              <tr>
-                <th>Metric</th>
-                <th>Result</th>
-            </tr>
-        </thead>
+              <div id="metrics-tables" class="wrap">
+                <table class="table table-striped" style="max-width: 1000px;">
+                  <thead>
+                    <tr>
+                      <th>Metric</th>
+                      <th>Result</th>
+                    </tr>
+                  </thead>
 
-        <tr> <td>Words</td> <td id="num-words"></td> </tr>
-        <tr> <td>Sentences</td> <td id="num-sentences"></td> </tr>
-        <tr> <td>Number of unique words</td> <td id="unique-words"></td> </tr>
-        <tr> <td>Average word size</td> <td id="ave-words"></td> </tr>
-        <tr> <td>Reading grade level</td> <td id="fk-score"></td> </tr>
-        <tr> <td>Sentences to review</td> <td id="weak-sent"></td> </tr>
-        
-
-    </table>
-</div>
+                  <tr> <td>Words</td> <td id="num-words"></td> </tr>
+                  <tr> <td>Sentences</td> <td id="num-sentences"></td> </tr>
+                  <tr> <td>Number of unique words</td> <td id="unique-words"></td> </tr>
+                  <tr> <td>Average word size</td> <td id="ave-words"></td> </tr>
+                  <tr> <td>Reading grade level</td> <td id="fk-score"></td> </tr>
+                  <tr> <td>Sentences to review</td> <td id="weak-sent"></td> </tr>
 
 
-{% endblock %}
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+              {% endblock %}
