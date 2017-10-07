@@ -47,10 +47,6 @@
     height: 400px;
 }
 
-#synonyms-button {
-    cursor: pointer;
-}
-
 .glyphicon-ok-circle {
     color: darkgreen;
 }
