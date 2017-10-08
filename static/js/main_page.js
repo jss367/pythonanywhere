@@ -66,7 +66,7 @@ function displayText() {
 
 function second_table() {
     $('#table2 tr').remove()
-    $('#table2 > thead:last').append('<tr><th>' + 'Big' + '</th><th>' + 'Biggr' + '</th></tr>');
+    $('#table2 > thead:last').append('<tr><th>' + 'Sentence Number' + '</th><th>' + 'Sentence' + '</th></tr>');
     for (var i = 0; i < results.weak_sent.length; i++) {
 
         $('#table2 > tbody:last').append('<tr><td>' + results.weak_sent_num[i] + '</td><td>' + results.weak_sent[i] + '</td></tr>');
