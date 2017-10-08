@@ -24,10 +24,6 @@
     margin-bottom: 20px;
 }
 
-#clean-text {
-    margin-bottom: 20px;
-}
-
 #user-text {
     position: relative;
     margin-bottom: 20px;
@@ -43,10 +39,6 @@
     color: #b3b3b3;
 }
 
-#spinner-container {
-    height: 400px;
-}
-
 .glyphicon-ok-circle {
     color: darkgreen;
 }
@@ -58,3 +50,7 @@
 .strike-through {
     text-decoration: line-through;
 }
+
+
+
+

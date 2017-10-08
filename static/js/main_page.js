@@ -31,7 +31,7 @@ $(document).ready(function() {
                 if (results.weak_sent.length > 0) {
                     second_table();
                 }
-                
+
             }
         });
     })
@@ -47,6 +47,8 @@ function myFunction() {
     }
 }
 
+
+
 function displayText() {
     console.log("The displayText function has been called")
     $("#num-words").text(results.num_words);
@@ -61,61 +63,13 @@ function displayText() {
     console.log(results.weak_sent.length);
 }
 
-function generate_table() {
-    // get the reference for the body
-    var body = document.getElementsByTagName("body")[0];
-
-    // creates a <table> element and a <tbody> element
-    var tbl = document.createElement("table");
-    //var header = document.createElement("header");
-    var header = '<tr><th>Sentence number</th><th>Sentence</th></tr>';
-
-    //var header = "<th>Header</th>";
-    var tblBody = document.createElement("tbody");
-
-
-    // creating all cells
-    for (var i = 0; i < results.weak_sent.length; i++) {
-        // creates a table row
-        var row = document.createElement("tr");
-
-        for (var j = 0; j < 2; j++) {
-            // Create a <td> element and a text node, make the text
-            // node the contents of the <td>, and put the <td> at
-            // the end of the table row
-            var cell = document.createElement("td");
-            if (j == 0) {
-                var cellText = document.createTextNode(results.weak_sent_num[i]);
-            } else {
-                var cellText = document.createTextNode(results.weak_sent[i]);
-            }
-
-
-            cell.appendChild(cellText);
-            row.appendChild(cell);
-        }
-
-        // add the row to the end of the table body
-        tblBody.appendChild(row);
-    }
-    // This is for the quick solution
-    tbl.innerHTML = header
-    // put the <tbody> in the <table>
-    tbl.appendChild(tblBody);
-
-
-
-    // appends <table> into <body>
-    body.appendChild(tbl);
-    // sets the border attribute of tbl to 2;
-    tbl.setAttribute("border", "2");
-}
 
 function second_table() {
+    $('#table2 tr').remove()
+    $('#table2 > thead:last').append('<tr><th>' + 'Big' + '</th><th>' + 'Biggr' + '</th></tr>');
+    for (var i = 0; i < results.weak_sent.length; i++) {
 
-    for (var i=0; i< results.weak_sent.length; i++)
-    {
-        $('#table2 > tbody:last').append('<tr><td>' + results.weak_sent_num[i] +'</td><td>' + results.weak_sent[i] + '</td>');
+        $('#table2 > tbody:last').append('<tr><td>' + results.weak_sent_num[i] + '</td><td>' + results.weak_sent[i] + '</td></tr>');
     }
 
 
