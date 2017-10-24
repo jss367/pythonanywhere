@@ -68,5 +68,5 @@ def analyze():
     (results) = analyze_text(mycontent)
     # Change this in between index and main page
     print("Here is the response of the analyze function in flask_app:")
-    print(results, file=sys.stderr)
+    print(repr(results), file=sys.stderr)
     return jsonify({'results': results})
