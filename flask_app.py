@@ -67,6 +67,6 @@ def analyze():
     # Change this in between index and main page
     results = analyze_text(mycontent) # Removed parentheses
     # Change this in between index and main page
-    print("Here is the response of the analyze function in flask_app:")
-    print(repr(results), file=sys.stderr)
+    print("Here is the response of the analyze function in flask_app: (disabled)")
+    #print(repr(results), file=sys.stderr)
     return jsonify({'results': results})
