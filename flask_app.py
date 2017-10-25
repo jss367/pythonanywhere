@@ -65,7 +65,7 @@ def analyze():
             "Unable to get URL. Please make sure it's valid and try again."
         )
     # Change this in between index and main page
-    (results) = analyze_text(mycontent)
+    results = analyze_text(mycontent) # Removed parentheses
     # Change this in between index and main page
     print("Here is the response of the analyze function in flask_app:")
     print(repr(results), file=sys.stderr)
